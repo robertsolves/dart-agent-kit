@@ -125,6 +125,16 @@ cd "$project"
 linked=0
 case "$src/" in "$project/"*) [ "$mode" = link ] && linked=1 ;; esac
 
+# Re-runs (kit.sh update) reuse the choices of the first install.
+options_file=".agents/.installed/$REPO.options"
+if [ -f "$options_file" ] && [ "$uninstall" = 0 ]; then
+  if [ "$tools" = auto ]; then
+    saved="$(sed -n 's/^tools=//p' "$options_file")"
+    [ -n "$saved" ] && tools="$saved"
+  fi
+  [ -z "$only" ] && only="$(sed -n 's/^only=//p' "$options_file")"
+fi
+
 has() { command -v "$1" >/dev/null 2>&1; }
 want() { case ",$tools," in *",$1,"*|*",all,"*) return 0 ;; *) return 1 ;; esac; }
 
@@ -213,6 +223,7 @@ if [ "$uninstall" = 1 ]; then
   [ -f "$manifest" ] || die "nothing to uninstall: $project/$manifest is missing"
   say "Removing $OWNER/$REPO from $project"
   remove_previous
+  rm -f "$options_file"
   strip_agents_md_block
   for d in .agents/commands .agents/skills .agents/agents .agents/rules "$manifest_dir" \
            .claude/commands .claude/skills .claude/agents .claude/rules .opencode/commands .opencode/agents \
@@ -424,6 +435,7 @@ fi
 if [ "$dry" = 0 ]; then
   mkdir -p "$manifest_dir"
   printf '%s\n' "$installed" | sed '/^$/d' > "$manifest"
+  printf 'tools=%s\nonly=%s\n' "$tools" "$only" > "$options_file"
 fi
 
 count="$(printf '%s\n' "$installed" | sed '/^$/d' | wc -l | tr -d ' ')"
