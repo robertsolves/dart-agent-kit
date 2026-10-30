@@ -101,10 +101,10 @@ That adds one `include:` line to each package's `analysis_options.yaml`, picking
 
 ## Combine it with the other kits
 
-This is one of four kits that install side by side: [agent-project-template](https://github.com/robertsolves/agent-project-template), [agent-commands](https://github.com/robertsolves/agent-commands), [dart-agent-kit](https://github.com/robertsolves/dart-agent-kit) and [prompt-trials](https://github.com/robertsolves/prompt-trials). To add any mix in one line:
+This is one of three kits that install side by side: [agent-project-template](https://github.com/robertsolves/agent-project-template), [agent-commands](https://github.com/robertsolves/agent-commands) and [dart-agent-kit](https://github.com/robertsolves/dart-agent-kit). To add any mix in one line:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/robertsolves/agent-commands/main/kit.sh | bash -s -- add template commands dart trials
+curl -fsSL https://raw.githubusercontent.com/robertsolves/agent-commands/main/kit.sh | bash -s -- add template commands dart
 ```
 
 Or run `... kit.sh | bash -s -- setup` once, and then just ask your agent to "add the dart kit" in any project.
@@ -112,7 +112,6 @@ Or run `... kit.sh | bash -s -- setup` once, and then just ask your agent to "ad
 ## Related
 
 - [agent-commands](https://github.com/robertsolves/agent-commands): language-agnostic audit and cleanup commands (band-aids, dead code, exploits, stale references and more).
-- [prompt-trials](https://github.com/robertsolves/prompt-trials): test your agent commands against a cheap model before you trust them.
 
 ## Licence
 
