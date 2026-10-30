@@ -15,6 +15,16 @@ Apply Dart and Flutter discipline whenever you touch Dart code. The skill ships 
 
 When project rules and Effective Dart disagree, the project rule wins. When the project rule is silent, Effective Dart applies. When both are silent and the task is non-obvious, ask the user rather than guessing.
 
+## Strict analyzer settings
+
+This skill ships the analyzer settings that back these rules: `analysis_options/dart.yaml` (every Dart lint listed on or off, each "off" with a reason) and `analysis_options/flutter.yaml` (the same plus Flutter's generated folders). To point a package at them:
+
+```sh
+bash .agents/skills/dart-discipline/scripts/use_strict_analysis.sh <package-dir>   # or --all for every package
+```
+
+It adds one `include:` line to the package's `analysis_options.yaml` and never touches an existing include unless given `--replace`. Switch a single rule off in the package's own file, under `linter: rules:`, with a comment saying why. Never edit the shipped copies: the installer replaces them.
+
 ## Which doc to load
 
 - **Naming or formatting** (class, file, variable, parameter, top-level constant; import order; trailing commas) → `effective-dart/style.md`.

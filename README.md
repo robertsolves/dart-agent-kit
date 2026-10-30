@@ -87,6 +87,18 @@ curl -fsSL https://raw.githubusercontent.com/robertsolves/dart-agent-kit/main/in
 
 The script is bash. Run it from Git Bash or WSL. Where it can't make symlinks it copies files instead.
 
+## Strict analysis options
+
+The kit also ships the analyzer settings I use on every Dart and Flutter project. `dart.yaml` lists every rule the Dart linter has, on or off, and every rule that's off has a comment saying why. It turns on `strict-casts`, `strict-inference` and `strict-raw-types` too. `flutter.yaml` is the same plus Flutter's generated folders.
+
+After installing, point your packages at them:
+
+```sh
+bash .agents/skills/dart-discipline/scripts/use_strict_analysis.sh --all
+```
+
+That adds one `include:` line to each package's `analysis_options.yaml`, picking `flutter.yaml` or `dart.yaml` from its `pubspec.yaml`. If a package already includes something like `flutter_lints`, it leaves it alone and tells you. Add `--replace` to swap it. Turn single rules off in your own file under `linter: rules:`. Expect a lot of warnings the first time on an existing codebase. `dart fix --apply` clears many of them. You need Dart 3.10 or later.
+
 ## Combine it with the other kits
 
 This is one of four kits that install side by side: [agent-project-template](https://github.com/robertsolves/agent-project-template), [agent-commands](https://github.com/robertsolves/agent-commands), [dart-agent-kit](https://github.com/robertsolves/dart-agent-kit) and [prompt-trials](https://github.com/robertsolves/prompt-trials). To add any mix in one line:
